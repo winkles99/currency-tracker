@@ -1,0 +1,38 @@
+{
+  "id": "currency-tracker",
+  "title": "Currency Tracker",
+  "description": "Notifies on currency changes RPG-style notifications.",
+  "authors": [
+    {
+      "name": "winkles99",
+      "flags": {}
+    }
+  ],
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12"
+  },
+  "esmodules": [
+    "scripts/currency-watcher.js"
+  ],
+  "relationships": {
+    "requires": [
+      {
+        "id": "socketlib",
+        "type": "module",
+        "compatibility": {
+          "verified": "1.0.13"
+        }
+      }
+    ]
+  },
+  "socket": true,
+  "url": "https://github.com/YourGitHub/currency-tracker",
+  "download": "https://github.com/YourGitHub/currency-tracker/archive/refs/heads/main.zip",
+  "manifest": "https://raw.githubusercontent.com/YourGitHub/currency-tracker/main/module.json",
+  "bugs": "https://github.com/YourGitHub/currency-tracker/issues",
+  "styles": [
+    "styles/styles.css"
+  ]
+}

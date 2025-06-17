@@ -1,0 +1,43 @@
+/* Container for notifications: centered fixed bar near top-middle */
+.statusbox {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 300px;
+  max-width: 600px;
+  background: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+  border-radius: 8px;
+  padding: 8px 12px;
+  z-index: 9999;
+  font-family: 'Signika', sans-serif;
+  font-size: 16px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none; /* so clicks pass through */
+}
+
+/* Each toast message */
+.currency-toast {
+  background: rgba(30, 30, 30, 0.8);
+  padding: 6px 10px;
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: auto;
+}
+
+/* When toast is shown */
+.currency-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fade out */
+.currency-toast.hide {
+  opacity: 0;
+  transform: translateY(-10px);
+}
