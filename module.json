@@ -28,10 +28,10 @@
     ]
   },
   "socket": true,
-  "url": "https://github.com/YourGitHub/currency-tracker",
-  "download": "https://github.com/YourGitHub/currency-tracker/archive/refs/heads/main.zip",
-  "manifest": "https://raw.githubusercontent.com/YourGitHub/currency-tracker/main/module.json",
-  "bugs": "https://github.com/YourGitHub/currency-tracker/issues",
+  "url": "https://github.com/winkles99/currency-tracker",
+  "download": "https://github.com/winkles99/currency-tracker/archive/refs/heads/main.zip",
+  "manifest": "https://raw.githubusercontent.com/winkles99/currency-tracker/main/module.json",
+  "bugs": "https://github.com/winkles99/currency-tracker/issues",
   "styles": [
     "styles/styles.css"
   ]
