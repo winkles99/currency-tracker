@@ -1,4 +1,4 @@
-# Currency Tracker 5e
+# Currency Tracker
 A module that watches player currency changes in their inventory and logs brief messages. For the evil DM in you.
 
 ## Features
