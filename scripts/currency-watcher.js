@@ -80,3 +80,16 @@ function notifyCurrencyChange(text, cssClass = "") {
     }, 500);
   }, 3000);
 }
+
+// ✅ Function to send a /desc message as GM
+function sendCurrencyDesc(actorName, verb, amount, denom) {
+  const gmUser = game.users.find(u => u.isGM && u.active);
+  if (!gmUser) return;
+
+  const messageContent = `/desc ${actorName} ${verb} ${amount} ${denom}`;
+  ChatMessage.create({
+    content: messageContent,
+    speaker: { alias: "System" },
+    whisper: [gmUser.id]
+  });
+}
