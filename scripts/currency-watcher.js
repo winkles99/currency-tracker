@@ -4,6 +4,7 @@ Hooks.once("socketlib.ready", () => {
 });
 
 Hooks.once("ready", () => {
+  // Only create container once
   if (!document.querySelector(".statusbox")) {
     const container = document.createElement("div");
     container.classList.add("statusbox");
@@ -26,8 +27,8 @@ Hooks.once("ready", () => {
           const verb = delta > 0 ? "gained" : "lost";
           const amount = Math.abs(delta);
 
-          // === CHANGED: Use actor's name in message ===
-          const actorName = actor.name || "Unknown";
+          // ✅ Include actor name
+          const actorName = actor.name ?? actor.data?.name ?? "Someone";
           const text = `${actorName} ${verb} ${amount} ${denom}`;
 
           const cssClass = denom.toLowerCase();
@@ -50,10 +51,8 @@ function notifyCurrencyChange(text, cssClass = "") {
   const container = document.querySelector(".statusbox");
   if (!container) return;
 
-  // Show container if hidden
-  if (!container.classList.contains("show")) {
-    container.classList.add("show");
-  }
+  // ✅ Show container only while notifications are visible
+  container.classList.add("show");
 
   const toast = document.createElement("div");
   toast.classList.add("currency-toast");
@@ -61,8 +60,7 @@ function notifyCurrencyChange(text, cssClass = "") {
   toast.textContent = text;
 
   container.appendChild(toast);
-
-  void toast.offsetWidth; // force reflow
+  void toast.offsetWidth; // Trigger reflow
 
   toast.classList.add("show");
 
@@ -71,7 +69,7 @@ function notifyCurrencyChange(text, cssClass = "") {
     setTimeout(() => {
       toast.remove();
 
-      // Hide container if empty
+      // ✅ Hide container if nothing left
       if (container.children.length === 0) {
         container.classList.remove("show");
       }
