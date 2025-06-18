@@ -1,63 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Signika&display=swap');
 
+/* === CHANGES: Make container invisible and no background */
 .statusbox {
   position: fixed;
-  top: 70px;
+  top: 70px;               
   left: 50%;
   transform: translateX(-50%);
-  min-width: 300px;
-  max-width: 600px;
-  background: rgba(0, 0, 0, 0.6); /* semi-transparent black */
-  border-radius: 8px;
-  padding: 8px 12px;
+  pointer-events: none;
   z-index: 9999;
-  display: none;
+  display: none; 
   font-family: 'Signika', sans-serif;
   font-size: 16px;
   color: white;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  pointer-events: none; /* so clicks pass through */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* NEW: visual clarity */
+
+  
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: auto !important;
+  width: auto !important;
+  overflow: visible !important;
 }
 
 .statusbox.show {
-  display: block;         /* Added: show container when .show class present */
+  display: block;
 }
 
-/* Each toast message */
 .currency-toast {
-  background: rgba(30, 30, 30, 0.8);
-  padding: 6px 10px;
-  border-radius: 6px;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
   pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  margin: 4px 0; 
 }
 
-/* When toast is shown */
 .currency-toast.show {
   opacity: 1;
-  transform: translateY(0);
 }
 
-/* Fade out */
 .currency-toast.hide {
   opacity: 0;
-  transform: translateY(-10px);
-}
-
-/* Optional: Color-coded currency classes */
-.currency-toast.gold {
-  color: #ffd700;
-}
-
-.currency-toast.silver {
-  color: #c0c0c0;
-}
-
-.currency-toast.copper {
-  color: #b87333;
+  transition: opacity 0.5s ease;
 }

@@ -23,9 +23,13 @@ Hooks.once("ready", () => {
         const oldValue = oldCurrency[denom] ?? 0;
         const delta = newValue - oldValue;
         if (delta !== 0) {
-          const verb = delta > 0 ? "Gained" : "Lost";
+          const verb = delta > 0 ? "gained" : "lost";
           const amount = Math.abs(delta);
-          const text = `${verb} ${amount} ${denom}`;
+
+          // === CHANGED: Use actor's name in message ===
+          const actorName = actor.name || "Unknown";
+          const text = `${actorName} ${verb} ${amount} ${denom}`;
+
           const cssClass = denom.toLowerCase();
           notifyCurrencyChange(text, cssClass);
         }
@@ -42,16 +46,11 @@ Hooks.once("ready", () => {
   }
 });
 
-/* === CHANGES ===
-  - Show .statusbox container only when a notification is present
-  - Hide .statusbox container when last notification is removed
-  - Notification container moves 50px lower via CSS (top: 70px)
-*/
 function notifyCurrencyChange(text, cssClass = "") {
   const container = document.querySelector(".statusbox");
   if (!container) return;
 
-  // Show container if hidden (added)
+  // Show container if hidden
   if (!container.classList.contains("show")) {
     container.classList.add("show");
   }
@@ -63,7 +62,7 @@ function notifyCurrencyChange(text, cssClass = "") {
 
   container.appendChild(toast);
 
-  void toast.offsetWidth;  // Force reflow for animation
+  void toast.offsetWidth; // force reflow
 
   toast.classList.add("show");
 
@@ -72,7 +71,7 @@ function notifyCurrencyChange(text, cssClass = "") {
     setTimeout(() => {
       toast.remove();
 
-      // Hide container if no more toasts (added)
+      // Hide container if empty
       if (container.children.length === 0) {
         container.classList.remove("show");
       }
