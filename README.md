@@ -1,7 +1,7 @@
-#Foundry VTT Currency Logger
+# Foundry VTT Currency Logger
 A simple Foundry VTT module that watches player currency changes in their inventory and logs brief messages to the console. Perfect for RPG-style games where you want a quick, unobtrusive currency transaction log for debugging or game tracking.
 
-##Features
+## Features
 Listens for changes in currency items in player inventories
 
 Logs concise messages to the console, e.g. Whisk lost 5 gp
@@ -10,7 +10,7 @@ Minimal setup and no UI clutter
 
 Lightweight and focused
 
-##Installation
+## Installation
 Download the latest release .zip or clone this repo.
 
 In Foundry VTT, go to Setup Modules and click Install Module.
@@ -19,22 +19,22 @@ Upload the module .zip or use the manifest URL if hosted.
 
 Enable the module in your world’s module settings.
 
-##Usage
+## Usage
 Once enabled, whenever a player gains or loses currency, a console message will appear like:
 
 Whisk gained 10 gp
 Raven lost 3 sp
 This helps GMs and developers quickly track currency changes during gameplay or testing.
 
-##Configuration
+## Configuration
 Currently, this module has no configurable settings.
 
-##Compatibility
+## Compatibility
 Tested with the D&D5e System Foundry VTT v12.0.0 and later.
 
-##Development
+## Development
 Feel free to contribute or customize! This is a minimal example module designed for quick currency monitoring.
 
-##License
+## License
 MIT License ©  winkles99
 
