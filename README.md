@@ -13,8 +13,6 @@ https://github.com/erizocosmico/foundryvtt-fancy-ui-5e/releases/download/v2.0.0/
 ## Usage
 Once enabled, whenever ana actor gains or loses currency, a console message will appear like:
 
-![lost gold](https://github.com/user-attachments/assets/1f561b5a-cbee-4e6a-b6ce-b9e366061c7e)
-
 ![gained 25](https://github.com/user-attachments/assets/c6a4026f-9e6d-4896-8ce9-f4ef51596235)
 
 
