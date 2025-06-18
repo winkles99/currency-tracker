@@ -28,7 +28,7 @@ Hooks.once("ready", () => {
           const verb = delta > 0 ? "gained" : "lost";
           const amount = Math.abs(delta);
 
-          //Get actor name
+          // Get actor name
           const actorName =
             actor.name || actor.prototypeToken?.name || actor.data?.name || "Unknown";
 
@@ -36,6 +36,13 @@ Hooks.once("ready", () => {
           const cssClass = denom.toLowerCase();
 
           notifyCurrencyChange(text, cssClass);
+
+          // 🗨️ Send message to chat for record-keeping
+          ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor }),
+            content: `<div class="currency-chat-message">${text}</div>`,
+          });
         }
       }
     }
