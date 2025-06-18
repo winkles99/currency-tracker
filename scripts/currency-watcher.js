@@ -42,9 +42,19 @@ Hooks.once("ready", () => {
   }
 });
 
+/* === CHANGES ===
+  - Show .statusbox container only when a notification is present
+  - Hide .statusbox container when last notification is removed
+  - Notification container moves 50px lower via CSS (top: 70px)
+*/
 function notifyCurrencyChange(text, cssClass = "") {
   const container = document.querySelector(".statusbox");
   if (!container) return;
+
+  // Show container if hidden (added)
+  if (!container.classList.contains("show")) {
+    container.classList.add("show");
+  }
 
   const toast = document.createElement("div");
   toast.classList.add("currency-toast");
@@ -53,7 +63,7 @@ function notifyCurrencyChange(text, cssClass = "") {
 
   container.appendChild(toast);
 
-  void toast.offsetWidth;
+  void toast.offsetWidth;  // Force reflow for animation
 
   toast.classList.add("show");
 
@@ -61,6 +71,11 @@ function notifyCurrencyChange(text, cssClass = "") {
     toast.classList.add("hide");
     setTimeout(() => {
       toast.remove();
+
+      // Hide container if no more toasts (added)
+      if (container.children.length === 0) {
+        container.classList.remove("show");
+      }
     }, 500);
   }, 3000);
 }
