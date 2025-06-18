@@ -28,7 +28,7 @@ Hooks.once("ready", () => {
           const verb = delta > 0 ? "gained" : "lost";
           const amount = Math.abs(delta);
 
-          // ✅ Get actor name safely
+          //Get actor name
           const actorName =
             actor.name || actor.prototypeToken?.name || actor.data?.name || "Unknown";
 
@@ -81,7 +81,7 @@ function notifyCurrencyChange(text, cssClass = "") {
   }, 3000);
 }
 
-// ✅ Function to send a /desc message as GM
+// Function to send a /desc message as GM
 function sendCurrencyDesc(actorName, verb, amount, denom) {
   const gmUser = game.users.find(u => u.isGM && u.active);
   if (!gmUser) return;
