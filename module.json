@@ -1,10 +1,6 @@
 {
   "id": "currency-tracker",
-<<<<<<< HEAD
-  "title": "🪙Currency Tracker",
-=======
-  "title": "Currency Tracker 5e",
->>>>>>> defa448 (changed name)
+  "title": "Currency Tracker🪙",
   "description": "Notifies on currency changes RPG-style notifications.",
   "authors": [
     {
