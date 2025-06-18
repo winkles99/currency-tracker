@@ -1,5 +1,5 @@
 # Currency Tracker 5e
-A simple Foundry VTT module that watches player currency changes in their inventory and logs brief messages to the console. Perfect for RPG-style games where you want a quick, unobtrusive currency transaction log for debugging or game tracking.
+A simple module that watches player currency changes in their inventory and logs brief messages. Perfect for RPG-style games where you want a quick, unobtrusive currency transaction notification.
 
 ## Features
 Listens for changes in currency items in player inventories
