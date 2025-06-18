@@ -13,7 +13,7 @@ Hooks.once("ready", () => {
 
   const trackedCurrencies = new Map();
 
-  Hooks.on("updateActor", (actor, update) => {
+  Hooks.on("updateActor", async (actor, update) => {
     const oldCurrency = trackedCurrencies.get(actor.id);
     const newCurrency = foundry.utils.getProperty(actor.system, "currency");
 
@@ -29,20 +29,23 @@ Hooks.once("ready", () => {
           const amount = Math.abs(delta);
 
           // Get actor name
-          const actorName =
-            actor.name || actor.prototypeToken?.name || actor.data?.name || "Unknown";
-
+          const actorName = actor.name || actor.prototypeToken?.name || actor.data?.name || "Unknown";
           const text = `${actorName} ${verb} ${amount} ${denom}`;
           const cssClass = denom.toLowerCase();
 
           notifyCurrencyChange(text, cssClass);
 
-          // 🗨️ Send message to chat for record-keeping
+          // ✅ Send to chat with parchment style
+          const speaker = {
+            alias: actorName,
+            actor: actor.id
+          };
+
           ChatMessage.create({
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor }),
+            speaker,
             content: `<div class="currency-chat-message">${text}</div>`,
-          });
+          }).catch(console.error);
         }
       }
     }
@@ -62,7 +65,6 @@ function notifyCurrencyChange(text, cssClass = "") {
   const container = document.querySelector(".statusbox");
   if (!container) return;
 
-  // Show container only while active
   container.classList.add("show");
 
   const toast = document.createElement("div");
@@ -71,7 +73,7 @@ function notifyCurrencyChange(text, cssClass = "") {
   toast.textContent = text;
 
   container.appendChild(toast);
-  void toast.offsetWidth; // Force reflow
+  void toast.offsetWidth;
 
   toast.classList.add("show");
 
@@ -79,8 +81,6 @@ function notifyCurrencyChange(text, cssClass = "") {
     toast.classList.add("hide");
     setTimeout(() => {
       toast.remove();
-
-      // Hide container if empty
       if (container.children.length === 0) {
         container.classList.remove("show");
       }
