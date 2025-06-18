@@ -4,7 +4,7 @@ Hooks.once("socketlib.ready", () => {
 });
 
 Hooks.once("ready", () => {
-  // Only create container once
+  // Create container only once
   if (!document.querySelector(".statusbox")) {
     const container = document.createElement("div");
     container.classList.add("statusbox");
@@ -23,15 +23,18 @@ Hooks.once("ready", () => {
       for (const [denom, newValue] of Object.entries(newCurrency)) {
         const oldValue = oldCurrency[denom] ?? 0;
         const delta = newValue - oldValue;
+
         if (delta !== 0) {
           const verb = delta > 0 ? "gained" : "lost";
           const amount = Math.abs(delta);
 
-          // ✅ Include actor name
-          const actorName = actor.name ?? actor.data?.name ?? "Someone";
-          const text = `${actorName} ${verb} ${amount} ${denom}`;
+          // ✅ Get actor name safely
+          const actorName =
+            actor.name || actor.prototypeToken?.name || actor.data?.name || "Unknown";
 
+          const text = `${actorName} ${verb} ${amount} ${denom}`;
           const cssClass = denom.toLowerCase();
+
           notifyCurrencyChange(text, cssClass);
         }
       }
@@ -40,6 +43,7 @@ Hooks.once("ready", () => {
     trackedCurrencies.set(actor.id, foundry.utils.duplicate(newCurrency));
   });
 
+  // Initialize cache of existing actor currencies
   for (const actor of game.actors) {
     if (actor.hasPlayerOwner && actor.system?.currency) {
       trackedCurrencies.set(actor.id, foundry.utils.duplicate(actor.system.currency));
@@ -51,7 +55,7 @@ function notifyCurrencyChange(text, cssClass = "") {
   const container = document.querySelector(".statusbox");
   if (!container) return;
 
-  // ✅ Show container only while notifications are visible
+  // Show container only while active
   container.classList.add("show");
 
   const toast = document.createElement("div");
@@ -60,7 +64,7 @@ function notifyCurrencyChange(text, cssClass = "") {
   toast.textContent = text;
 
   container.appendChild(toast);
-  void toast.offsetWidth; // Trigger reflow
+  void toast.offsetWidth; // Force reflow
 
   toast.classList.add("show");
 
@@ -69,7 +73,7 @@ function notifyCurrencyChange(text, cssClass = "") {
     setTimeout(() => {
       toast.remove();
 
-      // ✅ Hide container if nothing left
+      // Hide container if empty
       if (container.children.length === 0) {
         container.classList.remove("show");
       }
