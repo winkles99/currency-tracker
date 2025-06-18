@@ -1,26 +1,66 @@
-const notifyCurrencyChange = (text) => {
-  const container = module.status.element[0].querySelector(".statusbox");
+Hooks.once("socketlib.ready", () => {
+  const socket = socketlib.registerModule("currency-tracker");
+  socket.register("notifyCurrencyChange", notifyCurrencyChange);
+});
 
-  const newElement = document.createElement("div");
-  newElement.classList.add("currency-toast");
-  newElement.textContent = text;
+Hooks.once("ready", () => {
+  if (!document.querySelector(".statusbox")) {
+    const container = document.createElement("div");
+    container.classList.add("statusbox");
+    document.body.appendChild(container);
+  }
 
-  container.appendChild(newElement);
+  const trackedCurrencies = new Map();
 
-  // Trigger reflow to enable animation
-  void newElement.offsetWidth;
+  Hooks.on("updateActor", (actor, update) => {
+    const oldCurrency = trackedCurrencies.get(actor.id);
+    const newCurrency = foundry.utils.getProperty(actor.system, "currency");
 
-  // Add fade-in class
-  newElement.classList.add("show");
+    if (!newCurrency) return;
 
-  // Fade out after 5 seconds
+    if (oldCurrency) {
+      for (const [denom, newValue] of Object.entries(newCurrency)) {
+        const oldValue = oldCurrency[denom] ?? 0;
+        const delta = newValue - oldValue;
+        if (delta !== 0) {
+          const verb = delta > 0 ? "Gained" : "Lost";
+          const amount = Math.abs(delta);
+          const text = `${verb} ${amount} ${denom}`;
+          const cssClass = denom.toLowerCase();
+          notifyCurrencyChange(text, cssClass);
+        }
+      }
+    }
+
+    trackedCurrencies.set(actor.id, foundry.utils.duplicate(newCurrency));
+  });
+
+  for (const actor of game.actors) {
+    if (actor.hasPlayerOwner && actor.system?.currency) {
+      trackedCurrencies.set(actor.id, foundry.utils.duplicate(actor.system.currency));
+    }
+  }
+});
+
+function notifyCurrencyChange(text, cssClass = "") {
+  const container = document.querySelector(".statusbox");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.classList.add("currency-toast");
+  if (cssClass) toast.classList.add(cssClass);
+  toast.textContent = text;
+
+  container.appendChild(toast);
+
+  void toast.offsetWidth;
+
+  toast.classList.add("show");
+
   setTimeout(() => {
-    newElement.classList.remove("show");
-    newElement.classList.add("hide");
-
-    // Remove from DOM after fade-out finishes
+    toast.classList.add("hide");
     setTimeout(() => {
-      newElement.remove();
-    }, 1000);
-  }, 5000);
-};
+      toast.remove();
+    }, 500);
+  }, 3000);
+}
