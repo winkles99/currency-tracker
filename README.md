@@ -7,7 +7,7 @@ A module that watches player currency changes in their inventory and logs brief 
 
 ## Installation
 ```
-https://github.com/erizocosmico/foundryvtt-fancy-ui-5e/releases/download/v2.0.0/module.json
+[https://github.com/erizocosmico/foundryvtt-fancy-ui-5e/releases/download/v2.0.0/module.json](https://raw.githubusercontent.com/winkles99/currency-tracker/main/module.json)
 ```
 
 ## Usage
