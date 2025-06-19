@@ -28,6 +28,7 @@ Hooks.once("ready", () => {
           const verb = delta > 0 ? "gained" : "lost";
           const amount = Math.abs(delta);
 
+          //Get actor name
           const actorName =
             actor.name || actor.prototypeToken?.name || actor.data?.name || "Unknown";
 
@@ -35,7 +36,6 @@ Hooks.once("ready", () => {
           const cssClass = denom.toLowerCase();
 
           notifyCurrencyChange(text, cssClass);
-          logCurrencyChange(actorName, verb, amount, denom);
         }
       }
     }
@@ -68,7 +68,6 @@ function notifyCurrencyChange(text, cssClass = "") {
 
   toast.classList.add("show");
 
-  // Display for 5 seconds instead of 3
   setTimeout(() => {
     toast.classList.add("hide");
     setTimeout(() => {
@@ -79,16 +78,5 @@ function notifyCurrencyChange(text, cssClass = "") {
         container.classList.remove("show");
       }
     }, 500);
-  }, 5000);
-}
-
-function logCurrencyChange(actorName, verb, amount, denom) {
-  const content = `<div class="currency-chat-message">${actorName} ${verb} ${amount} ${denom}</div>`;
-  console.log("Sending chat message:", content);
-
-  ChatMessage.create({
-    // Optional: use alias only, don’t specify user ID if it's failing
-    speaker: ChatMessage.getSpeaker({ alias: actorName }),
-    content
-  }).catch(err => console.error("Failed to create chat message:", err));
+  }, 3000);
 }
