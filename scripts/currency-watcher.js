@@ -84,9 +84,11 @@ function notifyCurrencyChange(text, cssClass = "") {
 
 function logCurrencyChange(actorName, verb, amount, denom) {
   const content = `<div class="currency-chat-message">${actorName} ${verb} ${amount} ${denom}</div>`;
+  console.log("Sending chat message:", content);
+
   ChatMessage.create({
-    user: game.user.id,
+    // Optional: use alias only, don’t specify user ID if it's failing
     speaker: ChatMessage.getSpeaker({ alias: actorName }),
     content
-  });
+  }).catch(err => console.error("Failed to create chat message:", err));
 }
