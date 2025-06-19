@@ -28,7 +28,6 @@ Hooks.once("ready", () => {
           const verb = delta > 0 ? "gained" : "lost";
           const amount = Math.abs(delta);
 
-          //Get actor name
           const actorName =
             actor.name || actor.prototypeToken?.name || actor.data?.name || "Unknown";
 
@@ -36,6 +35,7 @@ Hooks.once("ready", () => {
           const cssClass = denom.toLowerCase();
 
           notifyCurrencyChange(text, cssClass);
+          logCurrencyChange(actorName, verb, amount, denom);
         }
       }
     }
@@ -68,6 +68,7 @@ function notifyCurrencyChange(text, cssClass = "") {
 
   toast.classList.add("show");
 
+  // Display for 5 seconds instead of 3
   setTimeout(() => {
     toast.classList.add("hide");
     setTimeout(() => {
@@ -78,5 +79,14 @@ function notifyCurrencyChange(text, cssClass = "") {
         container.classList.remove("show");
       }
     }, 500);
-  }, 3000);
+  }, 5000);
+}
+
+function logCurrencyChange(actorName, verb, amount, denom) {
+  const content = `<div class="currency-chat-message">${actorName} ${verb} ${amount} ${denom}</div>`;
+  ChatMessage.create({
+    user: game.user.id,
+    speaker: ChatMessage.getSpeaker({ alias: actorName }),
+    content
+  });
 }
