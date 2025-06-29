@@ -12,7 +12,7 @@ https://raw.githubusercontent.com/winkles99/currency-tracker/main/module.json
 ```
 
 ## Usage
-Once enabled, whenever ana actor gains or loses currency, a console message will appear like:
+Once enabled, whenever an actor gains or loses currency, a console message will appear like:
 
 ![gained 25](https://github.com/user-attachments/assets/c6a4026f-9e6d-4896-8ce9-f4ef51596235)
 
