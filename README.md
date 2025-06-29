@@ -1,5 +1,6 @@
 # Currency Tracker🪙 
-A module that watches player currency changes in their inventory and logs brief messages. For the evil DM in you.
+For the evil GM in you😈
+Logs RPG-style messages in both the console and the chat log to help GMs and players alike keep track of currency.
 
 ## Features
 - Listens for changes in currency in player inventories
