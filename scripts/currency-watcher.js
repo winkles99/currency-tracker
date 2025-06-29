@@ -28,14 +28,13 @@ Hooks.once("ready", () => {
           const verb = delta > 0 ? "gained" : "lost";
           const amount = Math.abs(delta);
 
-          //Get actor name
           const actorName =
             actor.name || actor.prototypeToken?.name || actor.data?.name || "Unknown";
 
           const text = `${actorName} ${verb} ${amount} ${denom}`;
           const cssClass = denom.toLowerCase();
 
-          notifyCurrencyChange(text, cssClass);
+          notifyCurrencyChange(text, cssClass, actor);
         }
       }
     }
@@ -51,11 +50,12 @@ Hooks.once("ready", () => {
   }
 });
 
-function notifyCurrencyChange(text, cssClass = "") {
+// === Updated notify function with chat + whisper support ===
+function notifyCurrencyChange(text, cssClass = "", actor = null) {
   const container = document.querySelector(".statusbox");
   if (!container) return;
 
-  // Show container only while active
+  // === UI Toast ===
   container.classList.add("show");
 
   const toast = document.createElement("div");
@@ -64,7 +64,7 @@ function notifyCurrencyChange(text, cssClass = "") {
   toast.textContent = text;
 
   container.appendChild(toast);
-  void toast.offsetWidth; // Force reflow
+  void toast.offsetWidth;
 
   toast.classList.add("show");
 
@@ -72,11 +72,19 @@ function notifyCurrencyChange(text, cssClass = "") {
     toast.classList.add("hide");
     setTimeout(() => {
       toast.remove();
-
-      // Hide container if empty
       if (container.children.length === 0) {
         container.classList.remove("show");
       }
     }, 500);
   }, 3000);
+
+  // === Chat Message ===
+  const recipients = actor
+    ? game.users.filter((u) => actor.testUserPermission(u, "OWNER")).map((u) => u.id)
+    : [];
+
+  ChatMessage.create({
+    content: `<span class="currency-chat ${cssClass}">${text}</span>`,
+    whisper: recipients
+  });
 }
