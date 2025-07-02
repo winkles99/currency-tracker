@@ -11,46 +11,74 @@ Hooks.once("ready", () => {
     document.body.appendChild(container);
   }
 
-  const trackedCurrencies = new Map();
+  const trackedCurrencies = new Map(); // For D&D 5e-style currencies
+  const trackedZenit = new Map();      // For Fabula Ultima
 
   Hooks.on("updateActor", (actor, update) => {
-    const oldCurrency = trackedCurrencies.get(actor.id);
+    // === Handle D&D-style currency ===
     const newCurrency = foundry.utils.getProperty(actor.system, "currency");
+    if (newCurrency) {
+      const oldCurrency = trackedCurrencies.get(actor.id);
 
-    if (!newCurrency) return;
+      if (oldCurrency) {
+        for (const [denom, newValue] of Object.entries(newCurrency)) {
+          const oldValue = oldCurrency[denom] ?? 0;
+          const delta = newValue - oldValue;
 
-    if (oldCurrency) {
-      for (const [denom, newValue] of Object.entries(newCurrency)) {
-        const oldValue = oldCurrency[denom] ?? 0;
-        const delta = newValue - oldValue;
+          if (delta !== 0) {
+            const verb = delta > 0 ? "gained" : "lost";
+            const amount = Math.abs(delta);
 
-        if (delta !== 0) {
-          const verb = delta > 0 ? "gained" : "lost";
-          const amount = Math.abs(delta);
+            const actorName =
+              actor.name || actor.prototypeToken?.name || actor.data?.name || "Unknown";
 
-          const actorName =
-            actor.name || actor.prototypeToken?.name || actor.data?.name || "Unknown";
+            const text = `${actorName} ${verb} ${amount} ${denom}`;
+            const cssClass = denom.toLowerCase();
 
-          const text = `${actorName} ${verb} ${amount} ${denom}`;
-          const cssClass = denom.toLowerCase();
-
-          notifyCurrencyChange(text, cssClass, actor);
+            notifyCurrencyChange(text, cssClass, actor);
+          }
         }
       }
+
+      trackedCurrencies.set(actor.id, foundry.utils.duplicate(newCurrency));
     }
 
-    trackedCurrencies.set(actor.id, foundry.utils.duplicate(newCurrency));
+    // === Handle Fabula Ultima "zenit" ===
+    const newZenit = foundry.utils.getProperty(actor.system, "resources.zenit.value");
+    if (typeof newZenit === "number") {
+      const oldZenit = trackedZenit.get(actor.id);
+      if (typeof oldZenit === "number" && newZenit !== oldZenit) {
+        const delta = newZenit - oldZenit;
+        const verb = delta > 0 ? "gained" : "lost";
+        const amount = Math.abs(delta);
+
+        const actorName =
+          actor.name || actor.prototypeToken?.name || actor.data?.name || "Unknown";
+
+        const text = `${actorName} ${verb} ${amount} zenit`;
+        notifyCurrencyChange(text, "zenit", actor);
+      }
+
+      trackedZenit.set(actor.id, newZenit);
+    }
   });
 
-  // Initialize cache of existing actor currencies
+  // === Initialize caches ===
   for (const actor of game.actors) {
-    if (actor.hasPlayerOwner && actor.system?.currency) {
-      trackedCurrencies.set(actor.id, foundry.utils.duplicate(actor.system.currency));
+    if (!actor.hasPlayerOwner) continue;
+
+    const currency = foundry.utils.getProperty(actor.system, "currency");
+    if (currency) {
+      trackedCurrencies.set(actor.id, foundry.utils.duplicate(currency));
+    }
+
+    const zenit = foundry.utils.getProperty(actor.system, "resources.zenit.value");
+    if (typeof zenit === "number") {
+      trackedZenit.set(actor.id, zenit);
     }
   }
 });
 
-// === Updated notify function with chat + whisper support ===
 function notifyCurrencyChange(text, cssClass = "", actor = null) {
   const container = document.querySelector(".statusbox");
   if (!container) return;
