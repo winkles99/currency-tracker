@@ -1,32 +1,29 @@
 .statusbox {
   position: fixed;
-  top: 70px; /* ✅ Appears 50px lower */
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  left: 0;
+  width: 100vw; /* Full width */
   font-family: 'Signika', sans-serif;
   font-size: 16px;
   color: white;
   z-index: 10000;
   pointer-events: none;
 
-  /* ✅ Start fully hidden */
   display: none;
-  background: none !important;
-  height: 0;
-  padding: 0;
-  margin: 0;
+  background: rgba(0, 0, 0, 0.8); /* Background moved here for full bar style */
+  padding: 12px 24px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .statusbox.show {
   display: block;
-  height: auto;
 }
 
 .currency-toast {
-  background: rgba(0, 0, 0, 0.8);
-  padding: 6px 12px;
+  display: inline-block;
+  background: transparent; /* Already handled in parent */
   border-radius: 6px;
-  margin: 4px 0;
+  margin: 0;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -38,3 +35,4 @@
 .currency-toast.hide {
   opacity: 0;
 }
+
