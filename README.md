@@ -3,9 +3,9 @@ For the evil GM in you😈
 Logs RPG-style messages in both the console and the chat log to help GMs and players alike keep track of currency.
 
 ## ✨ Features
-🧮 Detects currency changes on any player-owned actor
+- Detects currency changes on any player-owned actor
 
-💬 Sends brief notifications:
+- Sends brief notifications:
 
 - To the console (for GMs)
 
