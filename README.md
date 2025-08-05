@@ -1,6 +1,6 @@
 # Currency Tracker 
 For the evil GM in you😈
-Logs RPG-style messages in both the console and the chat log to help GMs and players alike keep track of currency.
+Logs RPG-style messages the console and  chat log to help GMs and players alike keep track of currency.
 
 ## ✨ Features
 - Detects currency changes on any player-owned actor
