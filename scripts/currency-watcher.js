@@ -78,16 +78,21 @@ function notifyCurrencyChange(text, cssClass = "", actor = null) {
     }, 500);
   }, 3000);
 
-  // === Restrict Chat Message ===
-  // Only send the message from the *current* user
-  if (!game.user.isGM && actor && !actor.testUserPermission(game.user, "OWNER")) {
-    return; // Skip if this user doesn't have permission to see this actor
-  }
+  // === Restrict Chat Message to sheet owner ===
+  if (!actor) return;
 
-  // Include the current user and all GMs
+  // All owners of this actor
+  const ownerIds = game.users
+    .filter(u => actor.testUserPermission(u, "OWNER"))
+    .map(u => u.id);
+
+  // Only proceed if *this* client is an owner
+  if (!ownerIds.includes(game.user.id)) return;
+
+  // Recipients: all owners + all GMs
   const recipients = game.users
-    .filter((u) => u.id === game.user.id || u.isGM)
-    .map((u) => u.id);
+    .filter(u => actor.testUserPermission(u, "OWNER") || u.isGM)
+    .map(u => u.id);
 
   ChatMessage.create({
     content: `<span class="currency-chat ${cssClass}">${text}</span>`,
