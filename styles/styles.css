@@ -1,8 +1,10 @@
 .statusbox {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw; /* Full width */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 300px;
+  max-width: 90vw;
   font-family: 'Signika', sans-serif;
   font-size: 16px;
   color: white;
@@ -10,9 +12,11 @@
   pointer-events: none;
 
   display: none;
-  background: rgba(0, 0, 0, 0.8); /* Background moved here for full bar style */
+  background: rgba(0, 0, 0, 0.5); /* More transparent background */
   padding: 12px 24px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  border-radius: 8px;
+  text-align: center;
 }
 
 .statusbox.show {
