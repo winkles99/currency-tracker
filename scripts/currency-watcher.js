@@ -50,7 +50,7 @@ Hooks.once("ready", () => {
   }
 });
 
-// === Updated notify function with chat + whisper support ===
+// === Updated notify function with chat + whisper support + SFX ===
 function notifyCurrencyChange(text, cssClass = "", actor = null) {
   const container = document.querySelector(".statusbox");
   if (!container) return;
@@ -78,6 +78,15 @@ function notifyCurrencyChange(text, cssClass = "", actor = null) {
     }, 500);
   }, 3000);
 
+  // === Play coin SFX ===
+  const playlist = game.playlists?.find(p => p.name === "SFX");
+  if (playlist) {
+    const track = playlist.sounds.find(s => s.name === "coin");
+    if (track) {
+      playlist.playSound(track);
+    }
+  }
+
   // === Restrict Chat Message to sheet owner ===
   if (!actor) return;
 
@@ -99,3 +108,4 @@ function notifyCurrencyChange(text, cssClass = "", actor = null) {
     whisper: recipients
   });
 }
+
