@@ -3,27 +3,33 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  min-width: 300px;
+  max-width: 90vw;
+  font-family: 'Signika', sans-serif;
+  font-size: 16px;
+  color: white;
   z-index: 10000;
   pointer-events: none;
+
   display: none;
-  gap: 0.5rem;
-  flex-direction: column;
+  background: rgba(0, 0, 0, 0.5); /* More transparent background */
+  padding: 12px 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  border-radius: 8px;
+  text-align: center;
 }
 
 .statusbox.show {
-  display: flex;
+  display: block;
 }
 
 .currency-toast {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 240px;
-  font-size: 10px;
-  z-index: 50;
+  display: inline-block;
+  background: transparent; /* Already handled in parent */
+  border-radius: 6px;
+  margin: 0;
   opacity: 0;
   transition: opacity 0.3s ease;
-  pointer-events: auto;
 }
 
 .currency-toast.show {
@@ -32,68 +38,4 @@
 
 .currency-toast.hide {
   opacity: 0;
-}
-
-.success-alert {
-  cursor: default;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 48px;
-  border-radius: 8px;
-  background-color: #232531;
-  padding: 10px;
-  gap: 0.5rem;
-}
-
-.success-alert > div:first-child {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.success-alert button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #888;
-  padding: 4px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.success-alert button:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.text-white {
-  color: white;
-}
-
-.text-gray-500 {
-  color: #888;
-}
-
-.text-[#2b9875] {
-  color: #2b9875;
-}
-
-.bg-white\/5 {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.backdrop-blur-xl {
-  backdrop-filter: blur(20px);
-}
-
-@media (min-width: 640px) {
-  .currency-toast {
-    width: 288px;
-    font-size: 12px;
-  }
-
-  .success-alert {
-    height: 56px;
-  }
 }
