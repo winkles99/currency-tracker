@@ -1,8 +1,8 @@
 # Currency Tracker 
-For the evil GM in you😈
+For the evil GM in you
 Logs RPG-style messages the console and  chat log to help GMs and players alike keep track of currency.
 
-## ✨ Features
+## Features
 - Detects currency changes on any player-owned actor
 
 - Sends brief notifications:
@@ -12,7 +12,7 @@ Logs RPG-style messages the console and  chat log to help GMs and players alike 
 - To the chat log, visible to the GM and the player who changed the currency
 ![gained 25](https://github.com/user-attachments/assets/c6a4026f-9e6d-4896-8ce9-f4ef51596235)
 
-## 📦 Installation
+## Installation
 Use this URL in Foundry’s module installer:
 ```
 https://raw.githubusercontent.com/winkles99/currency-tracker/main/module.json
@@ -21,11 +21,11 @@ https://raw.githubusercontent.com/winkles99/currency-tracker/main/module.json
 
 
 
-## 🔌 Dependencies
+## Dependencies
 - [SocketLib](https://github.com/farling42/foundryvtt-socketlib) – used for cross-client communication
 
 
-## 🧪Compatibility
+## Compatibility
 Tested with the D&D5e System Foundry VTT Release 12.331 and later.
 
 ## Development
