@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currency Notification Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/styles.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #2c2c2c;
+      color: white;
+    }
+    .controls {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background: #4CAF50;
+      color: white;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    .info {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <h1>Currency Notification Preview</h1>
+    <p>Click a button to see the notification appear:</p>
+    <button onclick="showNotification('+100 Gold')">Gain Gold</button>
+    <button onclick="showNotification('-50 Silver')">Lose Silver</button>
+    <button onclick="showNotification('+25 Copper')">Gain Copper</button>
+    <button onclick="showNotification('Party found treasure!')">Custom Message</button>
+  </div>
+
+  <div class="statusbox" id="statusbox">
+    <div class="currency-toast" id="toast">
+      Sample notification text
+    </div>
+  </div>
+
+  <div class="info">
+    <p>The notification appears centered on the screen and fades in/out automatically.</p>
+  </div>
+
+  <script>
+    function showNotification(message) {
+      const statusbox = document.getElementById('statusbox');
+      const toast = document.getElementById('toast');
+      
+      // Set message
+      toast.textContent = message;
+      
+      // Show statusbox
+      statusbox.classList.add('show');
+      
+      // Trigger fade in
+      setTimeout(() => {
+        toast.classList.add('show');
+      }, 10);
+      
+      // Hide after 3 seconds
+      setTimeout(() => {
+        toast.classList.add('hide');
+        toast.classList.remove('show');
+        
+        // Remove statusbox after fade
+        setTimeout(() => {
+          statusbox.classList.remove('show');
+          toast.classList.remove('hide');
+        }, 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
