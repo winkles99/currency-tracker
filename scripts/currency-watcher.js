@@ -107,14 +107,8 @@ function notifyCurrencyChange(text, cssClass = "", actor = null) {
     if (track) playlist.playSound(track);
   }
 
-  // Chat whisper to owners
-  if (!actor) return;
-
-  const ownerIds = game.users
-    .filter(u => actor.testUserPermission(u, "OWNER"))
-    .map(u => u.id);
-
-  if (!ownerIds.includes(game.user.id)) return;
+  // Chat whisper to owners (only send from one client to avoid duplicates)
+  if (!actor || !game.user.isGM) return;
 
   const recipients = game.users
     .filter(u => actor.testUserPermission(u, "OWNER") || u.isGM)
