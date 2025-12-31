@@ -14,7 +14,7 @@ Hooks.once("ready", () => {
 
   Hooks.on("updateActor", (actor, update) => {
 
-    // ==== PF2E CURRENCY EXTRACTION ====
+    
     let newCurrency = null;
 
     // PF2e current design: actor.system.inventory.currency
