@@ -17,7 +17,7 @@ Hooks.once("ready", () => {
     
     let newCurrency = null;
 
-    // PF2e current design: actor.system.inventory.currency
+    
     if (actor.system?.inventory?.currency) {
       newCurrency = foundry.utils.duplicate(actor.system.inventory.currency);
     }
